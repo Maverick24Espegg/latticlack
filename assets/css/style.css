@@ -2,6 +2,7 @@
     --primary: #a0d8ff;
     --bg: #0a0a1f;
     --card: #1a1a2e;
+    --accent: #ffcc00;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -10,14 +11,13 @@ body {
     background: var(--bg);
     color: #ddd;
     line-height: 1.8;
-    padding-bottom: 60px;
 }
 
 header {
     background: linear-gradient(135deg, #1a1a2e, #16213e);
-    padding: 80px 20px;
+    padding: 90px 20px;
     text-align: center;
-    border-bottom: 3px solid var(--primary);
+    border-bottom: 4px solid var(--primary);
 }
 
 nav {
@@ -25,63 +25,62 @@ nav {
     position: sticky;
     top: 0;
     z-index: 100;
-    padding: 15px 0;
+    padding: 16px 0;
     text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
 nav a {
     color: #ddd;
-    margin: 0 20px;
+    margin: 0 18px;
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.3s;
 }
 
-nav a:hover { color: var(--primary); }
+nav a:hover, nav a.active { color: var(--primary); }
 
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
-}
+.container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
 
 .card {
     background: var(--card);
-    border-radius: 12px;
-    padding: 30px;
-    margin: 30px 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border-radius: 16px;
+    padding: 35px;
+    margin: 40px 0;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 
-h1, h2 { color: var(--primary); margin-bottom: 20px; }
+h1 { font-size: 2.6em; margin-bottom: 10px; }
+h2 { color: var(--primary); margin-bottom: 20px; }
 
 .bilingual {
     display: flex;
-    gap: 40px;
+    gap: 50px;
     flex-wrap: wrap;
 }
 
-.cn, .en {
-    flex: 1;
-    min-width: 300px;
-}
+.cn, .en { flex: 1; min-width: 320px; }
 
 button {
     background: #0366d6;
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 14px 28px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 17px;
+    margin-top: 10px;
 }
 
 button:hover { background: #0a84ff; }
 
+.result { margin-top: 30px; padding: 20px; background: #16213e; border-radius: 10px; border-left: 5px solid var(--accent); }
+
 footer {
     text-align: center;
-    padding: 30px;
-    color: #888;
-    margin-top: 60px;
+    padding: 40px 20px;
+    color: #777;
+    font-size: 0.95em;
 }
 
 .lang-switch {
@@ -93,4 +92,5 @@ footer {
     border-radius: 30px;
     cursor: pointer;
     z-index: 200;
+    font-weight: bold;
 }
