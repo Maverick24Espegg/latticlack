@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周易六爻占卜 | I Ching Divination</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="lang-switch" onclick="toggleLang()">中 / EN</div>
+
+    <header>
+        <h1>周易六爻占卜</h1>
+        <p>I Ching Hexagram Divination - 模拟蓍草或金钱卦</p>
+    </header>
+
+    <nav>
+        <a href="index.html">首页 Home</a>
+        <a href="bazi.html">生辰八字 Bazi</a>
+        <a href="iching.html">周易六爻 I Ching</a>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <p>请集中精神，心中默念问题，然后点击“起卦”。</p>
+            <button onclick="castHexagram()">起卦 Cast Hexagram</button>
+            <div id="guaResult" style="margin-top:40px; font-size:1.15em; line-height:1.9;"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>周易强调“诚则灵” | For cultural and reflective purposes only</p>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        // 简化版64卦数据（可继续扩展解读）
+        const hexagrams = [
+            {id:1, name:"乾卦", en:"The Creative", meaning:"天 / 刚健自强"},
+            {id:2, name:"坤卦", en:"The Receptive", meaning:"地 / 柔顺厚德"},
+            {id:3, name:"屯卦", en:"Difficulty at the Beginning", meaning:"水雷 / 初难"},
+            {id:4, name:"蒙卦", en:"Youthful Folly", meaning:"山水 / 启蒙"},
+            // ... 实际使用时你可以把全部64卦简要信息放进来，这里先示例4个
+            // 建议补充到至少20-30个常用卦
+        ];
+
+        function castHexagram() {
+            let linesHTML = "";
+            let lineSymbols = [];
+            for(let i = 0; i < 6; i++) {
+                const isYang = Math.random() > 0.5;
+                lineSymbols.push(isYang ? "⚊" : "⚋");
+                linesHTML += `<div style="font-size:2em;">${isYang ? "⚊ 阳" : "⚋ 阴"}</div>`;
+            }
+
+            const randomIndex = Math.floor(Math.random() * hexagrams.length);
+            const gua = hexagrams[randomIndex];
+
+            document.getElementById('guaResult').innerHTML = `
+                <h2>${gua.name} ${gua.en}（第${gua.id}卦）</h2>
+                <div style="margin:20px 0;">${linesHTML}</div>
+                <p><strong>卦象寓意：</strong>${gua.meaning}</p>
+                <p style="color:#aaa;">此为随机模拟占卜，仅供参考与思考。请结合自身情境理解卦象。</p>
+            `;
+        }
+    </script>
+</body>
+</html>
