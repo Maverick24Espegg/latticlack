@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生辰八字 | Bazi Calculator</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="lang-switch" onclick="toggleLang()">中 / EN</div>
+
+    <header>
+        <h1>生辰八字查询</h1>
+        <p>Eight Characters (BaZi) - 传统命理参考</p>
+    </header>
+
+    <nav>
+        <a href="index.html">首页 Home</a>
+        <a href="bazi.html">生辰八字 Bazi</a>
+        <a href="iching.html">周易六爻 I Ching</a>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <p>输入出生信息（公历），获取八字参考（此为前端演示版，精确排盘建议结合专业万年历或工具）。</p>
+            
+            <label>姓氏 / Surname: <input type="text" id="surname" placeholder="例如：张"></label><br><br>
+            <label>出生日期 / Birth Date: <input type="date" id="date"></label><br><br>
+            <label>出生时间 / Birth Time: <input type="time" id="time" value="12:00"></label><br><br>
+            <label>性别 / Gender: 
+                <select id="gender">
+                    <option value="男">男 Male</option>
+                    <option value="女">女 Female</option>
+                </select>
+            </label><br><br>
+
+            <button onclick="calculateBazi()">排盘 Calculate</button>
+
+            <div id="result" style="margin-top:40px;"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>仅供文化与娱乐参考 | Not for absolute prediction</p>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        function calculateBazi() {
+            const surname = document.getElementById('surname').value || "未知";
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            if (!date) {
+                alert("请输入出生日期！");
+                return;
+            }
+            document.getElementById('result').innerHTML = `
+                <h3>您的八字参考</h3>
+                <p><strong>姓名：</strong>${surname}</p>
+                <p><strong>出生时间：</strong>${date} ${time}</p>
+                <p><strong>提示：</strong>完整准确的八字排盘涉及真太阳时与节气转换。此演示仅供参考，建议使用专业在线工具或咨询命理师。</p>
+            `;
+        }
+    </script>
+</body>
+</html>
