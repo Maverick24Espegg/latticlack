@@ -11,7 +11,7 @@
 
     <header>
         <h1>生辰八字查询</h1>
-        <p>Eight Characters (BaZi) - 传统命理参考</p>
+        <p>Eight Characters (BaZi) Analysis</p>
     </header>
 
     <nav>
@@ -22,44 +22,91 @@
 
     <div class="container">
         <div class="card">
-            <p>输入出生信息（公历），获取八字参考（此为前端演示版，精确排盘建议结合专业万年历或工具）。</p>
+            <h2>请输入出生信息（公历）</h2>
+            <p style="color:#ffcc00; margin-bottom:20px;">本工具为简化版，仅供文化探索与娱乐参考，不作为专业命理依据。</p>
+
+            <label>姓氏 / Surname：<input type="text" id="surname" placeholder="例如：李" style="padding:8px; width:200px;"></label><br><br>
             
-            <label>姓氏 / Surname: <input type="text" id="surname" placeholder="例如：张"></label><br><br>
-            <label>出生日期 / Birth Date: <input type="date" id="date"></label><br><br>
-            <label>出生时间 / Birth Time: <input type="time" id="time" value="12:00"></label><br><br>
-            <label>性别 / Gender: 
-                <select id="gender">
+            <label>出生日期 / Birth Date：
+                <input type="date" id="date" style="padding:8px;">
+            </label><br><br>
+
+            <label>出生时间 / Birth Time：
+                <input type="time" id="time" value="12:00" style="padding:8px;">
+            </label><br><br>
+
+            <label>性别 / Gender：
+                <select id="gender" style="padding:8px;">
                     <option value="男">男 Male</option>
                     <option value="女">女 Female</option>
                 </select>
             </label><br><br>
 
-            <button onclick="calculateBazi()">排盘 Calculate</button>
+            <button onclick="calculateBazi()">排盘 Calculate Bazi</button>
 
-            <div id="result" style="margin-top:40px;"></div>
+            <div id="result" class="result"></div>
         </div>
     </div>
 
     <footer>
-        <p>仅供文化与娱乐参考 | Not for absolute prediction</p>
+        <p>玄数之源 © 2026 | 仅供参考 | Hosted on GitHub Pages</p>
+        <p><img src="https://komarev.com/ghpvc/?username=你的用户名&label=总访问量&color=0a84ff&style=flat-square" alt="Visitor Count"></p>
     </footer>
 
     <script src="assets/js/script.js"></script>
     <script>
+        const tianGan = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+        const diZhi = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+        const gan5xing = ["木","木","火","火","土","土","金","金","水","水"];
+        const zhi5xing = ["水","土","木","木","土","火","火","土","金","金","土","水"];
+
         function calculateBazi() {
             const surname = document.getElementById('surname').value || "未知";
-            const date = document.getElementById('date').value;
-            const time = document.getElementById('time').value;
-            if (!date) {
+            const dateStr = document.getElementById('date').value;
+            const timeStr = document.getElementById('time').value;
+            const gender = document.getElementById('gender').value;
+
+            if (!dateStr) {
                 alert("请输入出生日期！");
                 return;
             }
-            document.getElementById('result').innerHTML = `
-                <h3>您的八字参考</h3>
-                <p><strong>姓名：</strong>${surname}</p>
-                <p><strong>出生时间：</strong>${date} ${time}</p>
-                <p><strong>提示：</strong>完整准确的八字排盘涉及真太阳时与节气转换。此演示仅供参考，建议使用专业在线工具或咨询命理师。</p>
+
+            const date = new Date(dateStr);
+            let year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            let day = date.getDate();
+            let hour = parseInt(timeStr.split(':')[0]);
+
+            // 简化干支计算（基于常见算法）
+            const ganYear = (year - 4) % 10;
+            const zhiYear = (year - 4) % 12;
+            const ganMonth = (ganYear * 2 + month + 1) % 10;   // 简化月柱
+            const zhiMonth = (month + 1) % 12;
+
+            // 日柱简易计算（实际应使用万年历，这里用近似值）
+            const ganDay = (Math.floor((year-1900)*5.25) + Math.floor(month*2.6) + day) % 10;
+            const zhiDay = (Math.floor((year-1900)*5.25) + Math.floor(month*2.6) + day) % 12;
+
+            const ganHour = (ganDay * 2 + Math.floor((hour + 1)/2)) % 10;
+            const zhiHour = Math.floor((hour + 1)/2) % 12;
+
+            const resultHTML = `
+                <h2>您的八字信息</h2>
+                <p><strong>姓名：</strong>${surname}　<strong>性别：</strong>${gender}</p>
+                <p><strong>出生时间：</strong>${dateStr} ${timeStr}</p>
+                <hr>
+                <h3>四柱八字：</h3>
+                <p><strong>年柱：</strong>${tianGan[ganYear]}${diZhi[zhiYear]}（${gan5xing[ganYear]} ${zhi5xing[zhiYear]}）</p>
+                <p><strong>月柱：</strong>${tianGan[ganMonth]}${diZhi[zhiMonth]}（${gan5xing[ganMonth]} ${zhi5xing[zhiMonth]}）</p>
+                <p><strong>日柱：</strong>${tianGan[ganDay]}${diZhi[zhiDay]}（${gan5xing[ganDay]} ${zhi5xing[zhiDay]}）</p>
+                <p><strong>时柱：</strong>${tianGan[ganHour]}${diZhi[zhiHour]}（${gan5xing[ganHour]} ${zhi5xing[zhiHour]}）</p>
+                <p style="margin-top:20px; color:#aaa; font-size:0.95em;">
+                    ※ 此为前端简化计算版本，精确度有限（未考虑真太阳时与精确节气）。<br>
+                    仅供文化探索、学习周易与传统命理之用，请理性参考。
+                </p>
             `;
+
+            document.getElementById('result').innerHTML = resultHTML;
         }
     </script>
 </body>
